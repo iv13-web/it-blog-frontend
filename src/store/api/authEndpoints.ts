@@ -2,7 +2,7 @@ import {api} from './api'
 import {IAuthResponse} from '../../types/responses'
 import {login, logout} from '../slices/AuthSlice'
 
-export const authApiEndpoints = api.injectEndpoints({
+export const authEndpoints = api.injectEndpoints({
 	endpoints: build => ({
 		login: build.mutation({
 			query: (credentials: { email: string, password: string }) => ({
@@ -63,4 +63,4 @@ export const {
 	useLogoutMutation,
 	useLazyCheckAuthQuery,
 	useLazyGetUsersQuery
-} = authApiEndpoints
+} = authEndpoints
