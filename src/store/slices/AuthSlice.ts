@@ -1,17 +1,16 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit'
 import {IUser} from '../../types/common'
-import {api} from '../api'
 import {IAuthResponse} from '../../types/responses'
 
 type AuthState = {
 	user: IUser | null,
-	token: string | null,
+	accessToken: string | null,
 	isAuthenticated: boolean
 }
 
 const initialState: AuthState = {
 	user: null,
-	token: null,
+	accessToken: null,
 	isAuthenticated: false,
 }
 
@@ -19,20 +18,17 @@ const authSlice = createSlice({
 	name: 'auth',
 	initialState,
 	reducers: {
-		logout: () => initialState
-	},
-	extraReducers: (build) => {
-		build.addMatcher(
-			api.endpoints.login.matchFulfilled,
-			(state, action: PayloadAction<IAuthResponse>) => {
-				const {payload} = action
-				state.token = payload.accessToken
-				state.user = payload.user
-				state.isAuthenticated = true // add extra logic with checking the activation link
-			}
-		)
-	},
+		logout: () => initialState,
+		login: (state, {payload}: PayloadAction<IAuthResponse>) => {
+			state.accessToken = payload.accessToken
+			state.user = payload.user
+			state.isAuthenticated = true // add extra logic with checking the activation link
+		},
+		updateToken: (state, {payload}: PayloadAction<string>) => {
+			state.accessToken = payload
+		}
+	}
 })
 
 export const authReducer = authSlice.reducer
-export const {logout} = authSlice.actions
+export const {updateToken, logout, login} = authSlice.actions
