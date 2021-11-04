@@ -3,19 +3,18 @@ import SearchIcon from '@mui/icons-material/Search'
 import {IconButton} from '@mui/material'
 
 type Props = {
-	width?: string,
-	height?: string,
 	onClick?: React.MouseEventHandler,
+	hideMobile?: boolean
 }
 
-export default function SearchIconButton({width, height, onClick}: Props) {
+export default function SearchIconButton({onClick, hideMobile}: Props) {
 	return (
 			<IconButton
 				onClick={onClick}
 				sx={{
 					display: {
 						xs: 'block',
-						sm: 'none'
+						sm: hideMobile ? 'none' : 'block'
 					},
 				}}
 			>

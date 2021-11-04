@@ -1,17 +1,15 @@
 import {Menu, MenuItem} from '@mui/material'
 import React from 'react'
-import {useAppDispatch} from '../../../store/store'
-import {logout} from '../../../store/slices/AuthSlice'
 import {useLogoutMutation} from '../../../store/api/authEndpoints'
 
 type Props = {
   anchorEl: HTMLElement | null,
   isMenuOpen: boolean,
-  onClose: any
+  onMenuClose: any
   menuId: string
 }
 
-export default function AvatarMenu({anchorEl, isMenuOpen, onClose, menuId}: Props) {
+export default function AvatarMenu({anchorEl, isMenuOpen, onMenuClose, menuId}: Props) {
   const [logout] = useLogoutMutation()
 
   return (
@@ -28,7 +26,7 @@ export default function AvatarMenu({anchorEl, isMenuOpen, onClose, menuId}: Prop
         horizontal: 'right',
       }}
       open={isMenuOpen}
-      onClose={onClose}
+      onClose={onMenuClose}
       sx={{
         '& .MuiMenu-list': {
           p: 0,
@@ -40,7 +38,10 @@ export default function AvatarMenu({anchorEl, isMenuOpen, onClose, menuId}: Prop
       }}
     >
       <MenuItem
-        onClick={logout}
+        onClick={() => {
+          onMenuClose()
+          logout(null)
+        }}
         sx={{
           m: 1,
           width: 'auto',
