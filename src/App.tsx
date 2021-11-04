@@ -1,8 +1,10 @@
 import {ThemeProvider} from '@mui/material'
 import {theme} from './theme/theme'
-import {FC, useEffect} from 'react'
+import React, {FC, useEffect} from 'react'
 import {useLazyCheckAuthQuery} from './store/api/authEndpoints'
-import ResponsiveDrawer from './Layout/Layout'
+import Layout from './Layout/Layout'
+import {BrowserRouter, Route, Switch} from 'react-router-dom'
+import SignIn from './components/SignIn'
 
 export const App: FC = () => {
 	const [checkAuth, {isLoading}] = useLazyCheckAuthQuery()
@@ -18,7 +20,13 @@ export const App: FC = () => {
 
 	return (
 		<ThemeProvider theme={theme}>
-			<ResponsiveDrawer/>
+			<BrowserRouter basename='/'>
+				<Layout>
+					<Switch>
+						<Route path='/signin' component={SignIn}/>
+					</Switch>
+				</Layout>
+			</BrowserRouter>
 		</ThemeProvider>
 	)
 }

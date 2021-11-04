@@ -1,5 +1,5 @@
 import {FC, useState} from 'react'
-import {useAppSelector} from '../hooks/useAppSelector'
+import {useAppSelector} from '../store/store'
 import {useLoginMutation, useLogoutMutation, useSignupMutation, useLazyGetUsersQuery} from '../store/api/authEndpoints'
 
 const SignIn: FC = () => {

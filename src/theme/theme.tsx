@@ -14,6 +14,11 @@ export const theme = createTheme({
 		MuiButton: {
 			defaultProps: {
 				disableElevation: true
+			},
+			styleOverrides: {
+				root: {
+					textTransform: 'none'
+				}
 			}
 		},
 		MuiAppBar: {
@@ -26,6 +31,6 @@ export const theme = createTheme({
 					boxShadow: theme => `0 1px 1px 1px ${alpha(theme.palette.common.black, 0.01)}`
 				}
 			}
-		}
+		},
 	}
 })
