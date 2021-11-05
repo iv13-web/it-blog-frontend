@@ -1,10 +1,10 @@
-import {CssBaseline, ThemeProvider} from '@mui/material'
+import {ThemeProvider} from '@mui/material'
 import {theme} from './theme/theme'
 import React, {FC, useEffect} from 'react'
 import {useLazyCheckAuthQuery} from './store/api/authEndpoints'
 import Layout from './Layout/Layout'
 import {BrowserRouter, Route, Switch} from 'react-router-dom'
-import SignIn from './pages/SignIn'
+import Enter from './pages/Enter'
 import Main from './pages/Main'
 
 export const App: FC = () => {
@@ -25,7 +25,7 @@ export const App: FC = () => {
 				<Switch>
 					<Layout>
 						<Route exact path='/' component={Main}/>
-						<Route path='/signin' component={SignIn}/>
+						<Route path='/enter' component={Enter}/>
 					</Layout>
 				</Switch>
 			</BrowserRouter>

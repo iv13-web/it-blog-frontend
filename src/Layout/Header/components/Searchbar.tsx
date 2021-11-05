@@ -42,8 +42,7 @@ const StyledInputBase = styled(InputBase)(({theme}) => ({
 			color: 'inherit',
 		},
 		'&:focus': {
-			borderColor: theme.palette.secondary.main,
-			boxShadow: `0 0 0 1px ${theme.palette.secondary.main}`,
+			boxShadow: `0 0 0 1px ${theme.palette.primary.main}`,
 			'&::placeholder': {
 				color: 'transparent',
 			},

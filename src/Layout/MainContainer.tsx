@@ -1,23 +1,31 @@
 import React from 'react'
 import {Grid} from '@mui/material'
-import Box from '@mui/material/Box'
 import {HEADER_HEIGHT} from './constants'
+import {theme} from '../theme/theme'
+import {SxProps} from '@mui/system'
+import {Theme} from '@mui/material/styles'
 
 type Props = {
 	children: React.ReactNode
+	maxWidth?: string | number,
+	sx?: SxProps<Theme>
 }
 
-export default function MainContainer({children}: Props) {
+export default function MainContainer({children, maxWidth, sx}: Props) {
 
-  return (
+	return (
 		<Grid
 			item
 			component='main'
-			sx={{maxWidth: '100%', flexGrow: 1}}
+			sx={{
+				width: '100%',
+				margin: '0 auto',
+				mt: `calc(${HEADER_HEIGHT}px + ${theme.spacing(2)})`,
+				pt: 2,
+				...sx
+			}}
 		>
-			<Box sx={{mt: `${HEADER_HEIGHT}px`, pt: 2,}}>
-				{children}
-			</Box>
+			{children}
 		</Grid>
-  )
+	)
 }

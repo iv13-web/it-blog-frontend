@@ -1,9 +1,8 @@
-import {Button, Container, InputBase, styled} from '@mui/material'
+import {Button, Container} from '@mui/material'
 import Toolbar from '@mui/material/Toolbar'
 import IconButton from '@mui/material/IconButton'
 import MenuIcon from '@mui/icons-material/Menu'
 import AppBar from '@mui/material/AppBar'
-import SearchIcon from '@mui/icons-material/Search'
 import Box from '@mui/material/Box'
 import React from 'react'
 import SearchIconButton from '../../UI/SearchIcon'
@@ -79,7 +78,7 @@ export default function Header({onDrawerToggle}: Props) {
 								/>
 							</>
 						) : (
-							<Link to='/signin'>
+							<Link to='/enter'>
 								<Button variant='contained' sx={{ml: {xs: 1}}}>Sign In</Button>
 							</Link>
 						)}
