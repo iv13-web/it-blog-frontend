@@ -13,34 +13,35 @@ const baseQuery = fetchBaseQuery({
 	},
 })
 
-const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown , FetchBaseQueryError> = async (
-	args,
-	api,
-	extraOptions
-) => {
-	let result = await baseQuery(args, api, extraOptions)
-	if (result.error && result.error.status === 401) {
-		const refreshResult = await baseQuery({
-			url: '/refresh',
-			method: 'GET',
-			credentials: 'include'
-		}, api, extraOptions)
-		if (refreshResult.data) {
-			// @ts-ignore
-			const accessToken = refreshResult.data.accessToken
-			api.dispatch(updateToken(accessToken as string))
-			result = await baseQuery(args, api, extraOptions)
-		} else {
-			api.dispatch(logout())
-			await baseQuery({
-				url: '/logout',
-				method: 'POST',
-				credentials: "include",
+const baseQueryWithReauth:
+	BaseQueryFn<string | FetchArgs, unknown , FetchBaseQueryError> = async (
+		args,
+		api,
+		extraOptions
+	) => {
+		let result = await baseQuery(args, api, extraOptions)
+		if (result.error && result.error.status === 401) {
+			const refreshResult = await baseQuery({
+				url: '/refresh',
+				method: 'GET',
+				credentials: 'include'
 			}, api, extraOptions)
+			if (refreshResult.data) {
+				// @ts-ignore
+				const accessToken = refreshResult.data.accessToken
+				api.dispatch(updateToken(accessToken as string))
+				result = await baseQuery(args, api, extraOptions)
+			} else {
+				api.dispatch(logout())
+				await baseQuery({
+					url: '/logout',
+					method: 'POST',
+					credentials: "include",
+				}, api, extraOptions)
+			}
 		}
+		return result
 	}
-	return result
-}
 
 export const api = createApi({
 	reducerPath: 'api',

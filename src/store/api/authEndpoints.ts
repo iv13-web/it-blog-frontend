@@ -5,24 +5,29 @@ import {login, logout} from '../slices/AuthSlice'
 export const authEndpoints = api.injectEndpoints({
 	endpoints: build => ({
 		login: build.mutation({
-			query: (credentials: { email: string, password: string }) => ({
+			query: (credentials: {email: string, password: string}) => ({
 				url: `/login`,
 				method: 'POST',
 				credentials: "include",
 				body: credentials
 			}),
-			async onQueryStarted(arg,{dispatch, queryFulfilled, getCacheEntry}) {
+			async onQueryStarted(arg, {dispatch, queryFulfilled, getCacheEntry}) {
 				await queryFulfilled
 				const userData = getCacheEntry().data
 				dispatch(login(userData))
 			}
 		}),
 		signup: build.mutation({
-			query: (credentials: { email: string, password: string }) => ({
+			query: (credentials: {username: string, email: string, password: string}) => ({
 				url: `/signup`,
 				method: 'POST',
 				body: credentials
 			}),
+			async onQueryStarted(arg, {dispatch, queryFulfilled, getCacheEntry}) {
+				await queryFulfilled
+				const userData = getCacheEntry().data
+				dispatch(login(userData))
+			}
 		}),
 		logout: build.mutation({
 			query: () => ({
@@ -30,7 +35,7 @@ export const authEndpoints = api.injectEndpoints({
 				credentials: "include",
 				method: 'POST',
 			}),
-			async onQueryStarted(arg,{queryFulfilled, dispatch}) {
+			async onQueryStarted(arg, {queryFulfilled, dispatch}) {
 				await queryFulfilled
 				dispatch(logout())
 			}
@@ -40,13 +45,20 @@ export const authEndpoints = api.injectEndpoints({
 				url: `/refresh`,
 				credentials: "include"
 			}),
-			async onQueryStarted(arg,{dispatch, queryFulfilled, getCacheEntry}) {
+			async onQueryStarted(arg, {dispatch, queryFulfilled, getCacheEntry}) {
 				await queryFulfilled
 				const userData = getCacheEntry().data
 				if (userData) {
 					dispatch(login(userData))
 				}
 			}
+		}),
+		checkUsername: build.mutation({
+			query: (username) => ({
+				url: `/check-username`,
+				method: 'POST',
+				body: username
+			}),
 		}),
 		getUsers: build.query<IAuthResponse, null>({
 			query: () => ({
@@ -62,5 +74,5 @@ export const {
 	useSignupMutation,
 	useLogoutMutation,
 	useLazyCheckAuthQuery,
-	useLazyGetUsersQuery
+	useCheckUsernameMutation
 } = authEndpoints

@@ -74,7 +74,7 @@ export default function NavSidebar() {
 			sx={{display: {xs: 'none', md: 'block'},}}
 			component='aside'
 		>
-			<Box sx={{mt:`${HEADER_HEIGHT}px`, pt: 2}}>
+			<Box sx={{mt:`${HEADER_HEIGHT}px`, pt: 1}}>
 				<Drawer
 					variant="persistent"
 					open
@@ -83,7 +83,8 @@ export default function NavSidebar() {
 						'& .MuiDrawer-paper': {
 							boxSizing: 'border-box',
 							border: 'none',
-							position: 'static'
+							position: 'static',
+							boxShadow: 'none'
 						},
 					}}
 				>

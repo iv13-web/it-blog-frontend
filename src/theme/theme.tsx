@@ -1,8 +1,6 @@
 import {alpha, createTheme} from '@mui/material'
 import {typography} from './typography'
 
-const { palette } = createTheme()
-
 export const theme = createTheme({
 	typography,
 
@@ -51,6 +49,15 @@ export const theme = createTheme({
 			styleOverrides: {
 				elevation0: {
 					boxShadow: `0 0 0 1px rgba(0,0,0,0.1)`
+				}
+			}
+		},
+		MuiContainer: {
+			defaultProps: {
+				sx: {
+					'&.MuiContainer-root': {
+						px: 2
+					}
 				}
 			}
 		}

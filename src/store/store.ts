@@ -3,15 +3,21 @@ import {authReducer} from './slices/AuthSlice'
 import {api} from './api/api'
 import {localStorageMiddleware} from './middlewares/localStorage'
 import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux'
-
+import {notificationReducer} from './slices/NotifficationSlice'
+import {notificationsMiddleware} from './middlewares/notifications'
 
 export const store = configureStore({
 	reducer: {
 		auth: authReducer,
+		notification: notificationReducer,
 		[api.reducerPath]: api.reducer
 	},
 	middleware: (getDefaultMiddleware) => {
-		return getDefaultMiddleware().concat(api.middleware, localStorageMiddleware)
+		return getDefaultMiddleware().concat(
+			api.middleware,
+			localStorageMiddleware,
+			notificationsMiddleware,
+		)
 	}
 })
 

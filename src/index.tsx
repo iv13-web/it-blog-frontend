@@ -4,11 +4,19 @@ import {App} from './App'
 import reportWebVitals from './reportWebVitals'
 import {store} from './store/store'
 import {Provider} from 'react-redux'
+import {Slide, ToastContainer} from 'react-toastify'
+import React from 'react'
 
 ReactDOM.render(
-	<Provider store={store}>
-		<App />
-	</Provider>,
+	<>
+		<Provider store={store}>
+			<App />
+		</Provider>
+		<ToastContainer
+			position="top-right"
+			transition={Slide}
+		/>
+	</>,
 	document.getElementById('root')
 )
 

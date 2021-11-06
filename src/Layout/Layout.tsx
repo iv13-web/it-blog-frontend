@@ -12,14 +12,14 @@ export default function Layout({children}: { children: React.ReactNode }) {
 		<Container maxWidth='lg'>
 			<CssBaseline/>
 			<Header onDrawerToggle={handleDrawerToggle}/>
-				<Grid container spacing={3}>
+				<Grid container spacing={2}>
 					<MobileDrawer
 						open={mobileOpen}
 						onClose={handleDrawerToggle}
 					>
 						{navMenu}
 					</MobileDrawer>
-							{children}
+					{children}
 				</Grid>
 		</Container>
 	)

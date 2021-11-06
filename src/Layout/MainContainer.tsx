@@ -7,21 +7,20 @@ import {Theme} from '@mui/material/styles'
 
 type Props = {
 	children: React.ReactNode
-	maxWidth?: string | number,
 	sx?: SxProps<Theme>
 }
 
-export default function MainContainer({children, maxWidth, sx}: Props) {
+export default function MainContainer({children, sx}: Props) {
 
 	return (
 		<Grid
 			item
 			component='main'
 			sx={{
-				width: '100%',
+				flexGrow: 1,
 				margin: '0 auto',
-				mt: `calc(${HEADER_HEIGHT}px + ${theme.spacing(2)})`,
-				pt: 2,
+				mt: `calc(${HEADER_HEIGHT}px + ${theme.spacing(1)})`,
+				pt: 1,
 				...sx
 			}}
 		>

@@ -2,14 +2,26 @@ import {login, logout, updateToken} from '../slices/AuthSlice'
 import {Middleware} from 'redux'
 
 export const localStorageMiddleware: Middleware = store => next => action => {
+	next(action)
 	if (login.match(action)) {
-		localStorage.setItem('accessToken', action.payload.accessToken)
+		try {
+			localStorage.setItem('accessToken', action.payload.accessToken)
+		} catch (e) {
+			console.log(e)
+		}
 	}
 	if (logout.match(action)) {
-		localStorage.removeItem('accessToken')
+		try {
+			localStorage.removeItem('accessToken')
+		} catch (e) {
+			console.log(e)
+		}
 	}
 	if (updateToken.match(action)) {
-		localStorage.setItem('accessToken', action.payload)
+		try {
+			localStorage.setItem('accessToken', action.payload)
+		} catch (e) {
+			console.log(e)
+		}
 	}
-	return next(action)
 }

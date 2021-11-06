@@ -56,7 +56,7 @@ export default function Searchbar() {
 		<Search>
 			<SearchIconWrapper>
 				<IconButton size='small'>
-					<SearchIcon sx={{color: theme => theme.palette.grey['400']}}/>
+					<SearchIcon sx={{color: theme => theme.palette.grey['400'], '&.MuiSvgIcon-root': {width: '1.1em'}}}/>
 				</IconButton>
 			</SearchIconWrapper>
 			<StyledInputBase
