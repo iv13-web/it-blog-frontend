@@ -21,10 +21,8 @@ import MainContainer from '../Layout/MainContainer'
 import GitHubIcon from '@mui/icons-material/GitHub'
 import {theme} from '../theme/theme'
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined'
-import VisibilityOffOutlinedIcon
-	from '@mui/icons-material/VisibilityOffOutlined'
-import AlternateEmailOutlinedIcon
-	from '@mui/icons-material/AlternateEmailOutlined'
+import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined'
+import AlternateEmailOutlinedIcon from '@mui/icons-material/AlternateEmailOutlined'
 import {useForm} from 'react-hook-form'
 import {yupResolver} from '@hookform/resolvers/yup'
 import * as yup from "yup"
@@ -41,6 +39,55 @@ const Label = styled('label')(({theme}) => ({
 	marginBottom: '8px',
 	fontWeight: 600
 }))
+
+const styles: any = {
+	wrapper: {
+		display: 'flex',
+		flexDirection: 'column',
+		p: {xs: 2, sm: 5}
+	},
+	topBtn: {
+		mb: 4,
+		height: 48,
+		transition: 'color .3s ease',
+		'&:hover': {
+			filter: 'brightness(80%)'
+		}
+	},
+	gitHubBtn: {
+		'&.MuiButton-root': {
+			backgroundColor: '#24292e',
+		}
+	},
+	divider: {
+		mb: 2,
+		'&.MuiDivider-root': {
+			whiteSpace: 'normal',
+			justifyContent: 'space-between',
+			'&:before, &:after': {
+				xs: {width: 0},
+				sm: {
+					width: '25%',
+					borderTop: '2px solid rgba(0, 0, 0, 0.12)'
+				}
+			}
+		}
+	},
+	errorBlock: {
+		marginTop: 2,
+		marginBottom: 2,
+		padding: 2,
+		backgroundColor: 'tomato',
+		borderRadius: '4px',
+		color: theme.palette.common.white,
+		textAlign: 'center'
+	},
+	inputHeight: {
+		'&.MuiInputBase-root': {
+			height: 48,
+		},
+	}
+}
 
 type SubmitData = {
 	username: string
@@ -129,13 +176,12 @@ export default function Enter() {
 		setFormType(formType === 'login' ? 'signup' : 'login')
 	}
 
-
 	const shouldShowSuccess = isUniqueUsername && !checking && minUsernameLength
 	const shouldShowError = !isUniqueUsername && !checking && minUsernameLength && data
 
 	return (
 		<MainContainer sx={{maxWidth: 640}}>
-			<Paper sx={{display: 'flex', flexDirection: 'column', p: {xs: 2, sm: 5}}}>
+			<Paper sx={styles.wrapper}>
 				<Box sx={{mb: 2}}>
 					<Typography
 						variant='h4'
@@ -147,16 +193,7 @@ export default function Enter() {
 				<Button
 					variant='contained'
 					startIcon={<GitHubIcon/>}
-					sx={{
-						mb: 4,
-						height: 48,
-						transition: 'color .3s ease',
-						backgroundColor: '#24292e',
-						'&:hover': {
-							backgroundColor: '#24292e',
-							filter: 'brightness(80%)'
-						}
-					}}
+					sx={{...styles.topBtn, ...styles.gitHubBtn}}
 				>
 					{formType === 'signup'
 						? 'Sign up with GitHub'
@@ -164,20 +201,7 @@ export default function Enter() {
 					}
 				</Button>
 
-				<Divider sx={{
-					mb: 2,
-					'&.MuiDivider-root': {
-						whiteSpace: 'normal',
-						justifyContent: 'space-between',
-						'&:before, &:after': {
-							xs: {width: 0},
-							sm: {
-								width: '25%',
-								borderTop: '2px solid rgba(0, 0, 0, 0.12)'
-							}
-						}
-					}
-				}}>
+				<Divider sx={styles.divider}>
 					<Link
 						component='button'
 						underline='none'
@@ -197,14 +221,7 @@ export default function Enter() {
 
 				<form noValidate onSubmit={handleSubmit(onSubmit)}>
 					{(loginError || signupError) &&
-						<Box sx={{
-							my: 2,
-							p: 2,
-							backgroundColor: 'tomato',
-							borderRadius: '4px',
-							color: theme.palette.common.white,
-							textAlign: 'center'
-						}}>
+						<Box sx={styles.errorBlock}>
 							{loginError
 								? 'Invalid password or email 😕'
 								: 'Error during registration, try later 😕'
@@ -224,19 +241,11 @@ export default function Enter() {
 								sx={{mb: theme.spacing(2)}}
 								InputProps={{
 									sx: {
-										'&.MuiInputBase-root': {
-											height: 48,
-										},
-										'&.MuiOutlinedInput-root': {
-											'& fieldset': {
-												borderColor: shouldShowSuccess && 'green',
-											},
-											'&:hover fieldset': {
-												borderColor: shouldShowSuccess && 'green',
-											},
-											'&.Mui-focused fieldset': {
-												borderColor: shouldShowSuccess && 'green',
-											},
+										...styles.inputHeight,
+										'&.MuiOutlinedInput-root': shouldShowSuccess && {
+											'& fieldset': {borderColor:'green'},
+											'&:hover fieldset': {borderColor:'green'},
+											'&.Mui-focused fieldset': {borderColor:'green'},
 										},
 									},
 									startAdornment: (
@@ -289,13 +298,7 @@ export default function Enter() {
 						type='email'
 						fullWidth
 						sx={{mb: theme.spacing(2),}}
-						InputProps={{
-							sx: {
-								'&.MuiInputBase-root': {
-									height: 48
-								},
-							},
-						}}
+						InputProps={{sx: styles.inputHeight}}
 					/>
 					{errors.email && (
 						<Typography
@@ -315,7 +318,7 @@ export default function Enter() {
 						fullWidth
 						sx={{mb: theme.spacing(2),}}
 						InputProps={{
-							sx: {'&.MuiInputBase-root': {height: 48}},
+							sx: styles.inputHeight,
 							endAdornment: (
 								<Tooltip
 									placement='left'

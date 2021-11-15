@@ -14,7 +14,7 @@ export const notificationsMiddleware: Middleware = store => next => action => {
 			hideProgressBar: true,
 		})
 		if (!user.isActivated) {
-			toast(`Please, activate account. Link was sent to ${user.email}`, {
+			toast(`Activate your account. Link was sent to ${user.email}`, {
 				autoClose: false,
 				type: 'warning',
 			})

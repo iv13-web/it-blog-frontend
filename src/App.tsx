@@ -3,15 +3,12 @@ import {theme} from './theme/theme'
 import React, {FC, useEffect} from 'react'
 import {useLazyCheckAuthQuery} from './store/api/authEndpoints'
 import Layout from './Layout/Layout'
-import {BrowserRouter, Redirect, Route, Switch} from 'react-router-dom'
+import {BrowserRouter, Route, Switch} from 'react-router-dom'
 import Enter from './pages/Enter'
 import {Main} from './pages/Main'
 import 'react-toastify/dist/ReactToastify.css'
-import {Top} from './pages/Top'
-import {Latest} from './pages/Latest'
 import {New} from './pages/New'
-import MainContainer from './Layout/MainContainer'
-import NavSidebar from './components/NavSidebar'
+import {PrivateRoute} from './components/PrivateRoute'
 
 
 export const App: FC = () => {
@@ -32,13 +29,9 @@ export const App: FC = () => {
 			<BrowserRouter>
 				<Layout>
 					<Switch>
-						<Route path='/new' component={New}/>
-
-
+						<PrivateRoute path='/new' component={New}/>
+						<Route path='/enter' component={Enter}/>
 						<Route path='/:category?' component={Main}/>
-
-
-							<Route path='/enter' component={Enter}/>
 					</Switch>
 				</Layout>
 			</BrowserRouter>

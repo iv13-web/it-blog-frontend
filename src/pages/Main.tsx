@@ -1,12 +1,7 @@
 import {FC} from 'react'
 import NavSidebar from '../components/NavSidebar'
 import MainContainer from '../Layout/MainContainer'
-import {
-	NavLink,
-	Route,
-	Switch,
-	useRouteMatch
-} from 'react-router-dom'
+import {NavLink, Route, Switch, useRouteMatch} from 'react-router-dom'
 import {Top} from './Top'
 import {Latest} from './Latest'
 import {Feed} from './Feed'
@@ -19,8 +14,19 @@ const nestedTopRoutes = [
 	{name: 'Infinity', path: '/top/infinity'},
 ]
 
+const NavButton = ({children}: {children: string}) => (
+	<Button
+		disableRipple
+		variant='text'
+		color='inherit'
+		sx={{fontWeight: 'inherit'}}
+	>
+		{children}
+	</Button>
+)
+
 export const Main: FC = () => {
-	let matchTopCategory = useRouteMatch('/top/:period')
+	const topCategorySelected = useRouteMatch('/top/:period')
 
 	return (
 		<>
@@ -29,23 +35,26 @@ export const Main: FC = () => {
 
 				<div style={{display: 'flex', justifyContent: 'space-between'}}>
 					<div>
-						<NavLink exact activeStyle={{fontWeight: 'bold'}} to='/'>Feed </NavLink>
-						<NavLink activeStyle={{fontWeight: "bold"}} to='/latest'>Latest </NavLink>
+						<NavLink exact activeStyle={{fontWeight: 'bold'}} to='/'>
+							<NavButton>Feed</NavButton>
+						</NavLink>
+
+						<NavLink activeStyle={{fontWeight: "bold"}} to='/latest'>
+							<NavButton>Latest</NavButton>
+						</NavLink>
 						<NavLink
-							isActive={() => Boolean(matchTopCategory)}
+							isActive={() => Boolean(topCategorySelected)}
 							activeStyle={{fontWeight: "bold"}}
 							to='/top/week'
 						>
-							Top
+							<NavButton>Top</NavButton>
 						</NavLink>
 					</div>
-					{matchTopCategory && (
+					{topCategorySelected && (
 						<div>
 							{nestedTopRoutes.map(route => (
-								<NavLink activeStyle={{fontWeight: "bold"}} to={route.path}>
-									<Button variant='text' color='inherit' sx={{fontWeight: 'inherit'}}>
-										{route.name}
-									</Button>
+								<NavLink key={route.name} activeStyle={{fontWeight: "bold"}} to={route.path}>
+									<NavButton>{route.name}</NavButton>
 								</NavLink>
 							))}
 						</div>
