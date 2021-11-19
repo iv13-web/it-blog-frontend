@@ -14,6 +14,7 @@ import {PrivateRoute} from './components/PrivateRoute'
 export const App: FC = () => {
 	const responsiveFontTheme = responsiveFontSizes(theme)
 	const [checkAuth, {isLoading}] = useLazyCheckAuthQuery()
+
 	useEffect(() => {
 		if (localStorage.getItem('accessToken')) {
 			checkAuth(null)

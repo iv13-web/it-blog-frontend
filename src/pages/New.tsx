@@ -4,10 +4,11 @@ import {useAppSelector} from '../store/store'
 import {PostForm} from '../components/PostForm'
 
 export const New = () => {
+	const isAuthenticated = useAppSelector(state => state.auth.isAuthenticated)
 	const isActivated = useAppSelector(state => state.auth.user?.isActivated)
 	const userEmail = useAppSelector(state => state.auth.user?.email)
 
-	if (!isActivated) {
+	if (isAuthenticated && !isActivated) {
 		return (
 			<MainContainer>
 				<Paper sx={{width: 600, m: '0 auto', p: {xs: 2, sm: 5}}}>

@@ -1,6 +1,6 @@
 export const typography = {
 	fontFamily: [
-		'Noto Sans',
+		'"Noto Sans"',
 		'-apple-system',
 		'BlinkMacSystemFont',
 		'"Segoe UI"',

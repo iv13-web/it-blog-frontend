@@ -48,8 +48,10 @@ export const authEndpoints = api.injectEndpoints({
 			async onQueryStarted(arg, {dispatch, queryFulfilled, getCacheEntry}) {
 				await queryFulfilled
 				const userData = getCacheEntry().data
-				if (userData) {
+				if (userData?.accessToken) {
 					dispatch(login(userData))
+				} else {
+					dispatch(logout())
 				}
 			}
 		}),

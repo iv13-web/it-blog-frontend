@@ -26,7 +26,8 @@ const BigInput = styled(TextField)({
 		fontWeight: 'bold',
 		'&::placeholder': {
 			fontSize: 'inherit',
-			fontWeight: 'inherit'
+			fontWeight: 'inherit',
+			color: 'black'
 		}
 	}
 })
@@ -50,10 +51,11 @@ const SmallInput = styled(TextField)<OutlinedTextFieldProps>(({theme}) => ({
 	}
 }))
 
-
 const UploadButton = styled(Button)(({theme}) => ({
 	borderRadius: 0,
-	color: alpha(theme.palette.common.black, 0.4),
+	paddingBottom: theme.spacing(1.2),
+	paddingTop: theme.spacing(1.2),
+	color: alpha(theme.palette.common.black, 0.6),
 	display: 'flex',
 	justifyContent: 'start',
 	fontWeight: 600,
@@ -67,11 +69,8 @@ const UploadButton = styled(Button)(({theme}) => ({
 		marginLeft: `-${theme.spacing(4)}`,
 		marginRight: `-${theme.spacing(4)}`,
 	},
-	backgroundColor: alpha(theme.palette.common.black, 0.1),
 	'&.MuiButton-root': {
-		'&:hover': {
-			backgroundColor: alpha(theme.palette.common.black, 0.1)
-		}
+		backgroundColor: alpha(theme.palette.common.black, 0.1),
 	}
 }))
 

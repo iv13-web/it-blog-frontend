@@ -1,7 +1,13 @@
-import React, {useState} from 'react'
-import {Route, Redirect, RouteProps} from 'react-router-dom'
+import React from 'react'
+import {
+	Route,
+	Redirect,
+	RouteProps,
+	useHistory,
+} from 'react-router-dom'
 import {useAppSelector} from '../store/store'
 import {RouteComponentProps} from 'react-router'
+import useUpdatedEffect from '../hooks/useUpdatedEffect'
 
 interface IPrivateRouteProps extends RouteProps {
 	component: React.ComponentType<RouteComponentProps<any>> | React.ComponentType<any>
@@ -9,22 +15,34 @@ interface IPrivateRouteProps extends RouteProps {
 
 export const PrivateRoute = (props: IPrivateRouteProps) => {
 	const isAuthenticated = useAppSelector(state => state.auth.isAuthenticated)
+	const {push} = useHistory()
 	const {component: Component, ...rest} = props
+
+	useUpdatedEffect(() => {
+		if (!isAuthenticated) {
+			push('/enter')
+		}
+	}, [isAuthenticated])
+
+	if (localStorage.getItem('accessToken')) {
+		return <Route
+			{...rest}
+			render={(routeProps) =>
+				<Component {...routeProps} />
+			}
+		/>
+	}
 
 	return (
 		<Route
 			{...rest}
 			render={(routeProps) =>
-				isAuthenticated ? (
-					<Component {...routeProps} />
-				) : (
-					<Redirect
-						to={{
-							pathname: '/enter',
-							state: {from: routeProps.location}
-						}}
-					/>
-				)
+				<Redirect
+					to={{
+						pathname: '/enter',
+						state: {from: routeProps.location}
+					}}
+				/>
 			}
 		/>
 	)
